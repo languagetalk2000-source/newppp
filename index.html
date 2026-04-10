@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saroj Kumar — VFX Roto Artist</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --surface: #1e1e1e;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --text: #f0ede8;
+    --text2: #9a9590;
+    --text3: #5a5652;
+    --accent: #e8c547;
+    --accent2: #c4a630;
+    --accent-bg: rgba(232,197,71,0.08);
+    --accent-border: rgba(232,197,71,0.25);
+    --pill-bg: rgba(255,255,255,0.05);
+    --pill-border: rgba(255,255,255,0.1);
+    --hero-sub: #6b6560;
+    --nav-bg: rgba(10,10,10,0.92);
+    --card-hover: rgba(255,255,255,0.03);
+  }
+  [data-theme="light"] {
+    --bg: #f5f2ed;
+    --bg2: #ede9e2;
+    --bg3: #e4dfd7;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.15);
+    --text: #1a1714;
+    --text2: #5a5450;
+    --text3: #9a9590;
+    --accent: #b8920a;
+    --accent2: #9a7b08;
+    --accent-bg: rgba(184,146,10,0.08);
+    --accent-border: rgba(184,146,10,0.25);
+    --pill-bg: rgba(0,0,0,0.05);
+    --pill-border: rgba(0,0,0,0.12);
+    --hero-sub: #9a9590;
+    --nav-bg: rgba(245,242,237,0.92);
+    --card-hover: rgba(0,0,0,0.02);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .nav-name, .section-label {
+    font-family: 'Syne', sans-serif;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s;
+  }
+
+  .nav-name {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .nav-name span { color: var(--accent); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text2);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  @media (max-width: 600px) { .nav-links { display: none; } }
+
+  .theme-toggle {
+    width: 36px; height: 36px;
+    border: 0.5px solid var(--border2);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text2);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    max-width: 700px;
+    max-height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,197,71,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1.hero-name {
+    font-size: clamp(3rem, 9vw, 8rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name .line2 {
+    display: block;
+    color: var(--text3);
+  }
+
+  .hero-desc {
+    font-size: clamp(13px, 1.5vw, 15px);
+    color: var(--text2);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+  }
+
+  .btn-primary {
+    padding: 12px 28px;
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-outline {
+    padding: 12px 28px;
+    background: transparent;
+    color: var(--text2);
+    border: 0.5px solid var(--border2);
+    border-radius: 2px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { border-color: var(--text); color: var(--text); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .hero-ticker {
+    position: absolute;
+    right: clamp(1.5rem, 5vw, 4rem);
+    bottom: clamp(2rem, 5vw, 4rem);
+    writing-mode: vertical-rl;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  section { padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem); }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-divider {
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+    min-width: 30px;
+  }
+
+  h2.section-title {
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .experience-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+
+  .exp-card {
+    background: var(--bg);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    transition: background 0.2s;
+  }
+
+  .exp-card:hover { background: var(--card-hover); }
+
+  .exp-company {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .exp-role {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  .exp-period {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+
+  .skill-group {
+    background: var(--bg);
+    padding: 1.75rem 2rem;
+    transition: background 0.2s;
+  }
+
+  .skill-group:hover { background: var(--card-hover); }
+
+  .skill-group-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    padding: 5px 12px;
+    background: var(--pill-bg);
+    border: 0.5px solid var(--pill-border);
+    border-radius: 2px;
+    font-size: 12px;
+    color: var(--text2);
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .skill-tag:hover { border-color: var(--accent-border); color: var(--text); }
+
+  .skill-tag.highlight {
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--bg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .project-card:hover { background: var(--card-hover); }
+
+  .project-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .project-type {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.04em;
+  }
+
+  .project-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    background: var(--accent-bg);
+    border: 0.5px solid var(--accent-border);
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  .education-list {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+
+  .edu-row {
+    background: var(--bg);
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .edu-row:hover { background: var(--card-hover); }
+
+  .edu-year {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    min-width: 40px;
+  }
+
+  .edu-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .edu-institution {
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 2px;
+  }
+
+  .edu-grade {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .contact-section {
+    border-top: 0.5px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { gap: 2rem; }
+    .exp-card { grid-template-columns: 1fr; }
+    .edu-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .edu-year { display: none; }
+  }
+
+  .contact-big-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .contact-tagline {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    border: 0.5px solid var(--border2);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text3);
+  }
+
+  .contact-label {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .contact-value {
+    font-size: 13px;
+    color: var(--text);
+    margin-top: 2px;
+  }
+
+  .contact-value a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .contact-value a:hover { text-decoration: underline; }
+
+  .langs-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .lang-pill {
+    padding: 6px 14px;
+    border: 0.5px solid var(--border2);
+    border-radius: 2px;
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-right {
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-scroll-reveal {
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero-name { animation-delay: 0.25s; }
+  .hero-desc { animation-delay: 0.4s; }
+  .hero-ctas { animation-delay: 0.55s; }
+  .hero-stats { animation-delay: 0.7s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Saroj<span>.</span>Kumar</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <svg id="iconSun" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="display:none">
+        <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+      </svg>
+      <svg id="iconMoon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-eyebrow hero-scroll-reveal">VFX Roto Artist · Odisha, India</div>
+  <h1 class="hero-name hero-scroll-reveal">
+    Saroj
+    <span class="line2">Kumar</span>
+  </h1>
+  <p class="hero-desc hero-scroll-reveal">
+    Mid-level Roto &amp; Paint artist with hands-on experience across Bollywood blockbusters, South Indian epics, and Hollywood productions. Proficient in Silhouette, Nuke, and Fusion.
+  </p>
+  <div class="hero-ctas hero-scroll-reveal">
+    <a href="mailto:sarojb353@gmail.com" class="btn-primary">Get in touch</a>
+    <a href="#projects" class="btn-outline">View projects</a>
+  </div>
+  <div class="hero-stats hero-scroll-reveal">
+    <div class="stat-item">
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Years experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">18<span>+</span></div>
+      <div class="stat-label">Productions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Studios</div>
+    </div>
+  </div>
+  <div class="hero-ticker">Roto · Paint · Compositing</div>
+</section>
+
+<section id="experience">
+  <div class="section-header scroll-reveal">
+    <span class="section-label">01 / Experience</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="section-title scroll-reveal" style="margin-bottom: 2rem;">Work history</h2>
+  <div class="experience-grid scroll-reveal">
+    <div class="exp-card">
+      <div>
+        <div class="exp-company">Pixrock VFX Pvt Ltd</div>
+        <div class="exp-role">Mid Roto Artist</div>
+        <div class="exp-desc">Handled complex rotoscoping tasks for mid-to-large scale productions. Worked on multi-layered sequences with precise matte extraction, motion blur handling, and paint work across Bollywood and international titles.</div>
+      </div>
+      <div class="exp-period">Jan 2023 – May 2024</div>
+    </div>
+    <div class="exp-card">
+      <div>
+        <div class="exp-company">Ny Vfxwaala LLP</div>
+        <div class="exp-role">Roto Artist</div>
+        <div class="exp-desc">Began professional VFX career performing rotoscoping and matte extraction. Built strong foundations in Silhouette and compositing pipelines while contributing to major Bollywood releases.</div>
+      </div>
+      <div class="exp-period">Jan 2022 – Dec 2022</div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-header scroll-reveal">
+    <span class="section-label">02 / Skills</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="section-title scroll-reveal" style="margin-bottom: 2rem;">Toolset</h2>
+  <div class="skills-grid scroll-reveal">
+    <div class="skill-group">
+      <div class="skill-group-label">Roto &amp; Compositing</div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Silhouette</span>
+        <span class="skill-tag highlight">Nuke</span>
+        <span class="skill-tag highlight">Fusion</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">3D &amp; Motion</div>
+      <div class="skill-tags">
+        <span class="skill-tag">3ds Max</span>
+        <span class="skill-tag">After Effects</span>
+        <span class="skill-tag">Adobe Premiere</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Design &amp; Image</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Photoshop</span>
+        <span class="skill-tag">Illustrator</span>
+        <span class="skill-tag">Corel Draw</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Audio &amp; Legacy</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Adobe Audition</span>
+        <span class="skill-tag">Adobe Flash</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-header scroll-reveal">
+    <span class="section-label">03 / Projects</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="section-title scroll-reveal" style="margin-bottom: 2rem;">Productions</h2>
+  <div class="projects-grid scroll-reveal">
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Jawan</div>
+      <div class="project-type">Bollywood · 2023</div>
+      <span class="project-badge">Hindi</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Leo</div>
+      <div class="project-type">Tamil · 2023</div>
+      <span class="project-badge">Tamil</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Ant-Man and the Wasp</div>
+      <div class="project-type">Hollywood · Marvel</div>
+      <span class="project-badge">Hollywood</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">The Last Airbender</div>
+      <div class="project-type">Netflix Original</div>
+      <span class="project-badge">Hollywood</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">The Wheel of Time</div>
+      <div class="project-type">Amazon Prime Series</div>
+      <span class="project-badge">Hollywood</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">The Man Who Fell to Earth</div>
+      <div class="project-type">International Series</div>
+      <span class="project-badge">Hollywood</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Blue Beetle</div>
+      <div class="project-type">Hollywood · DC</div>
+      <span class="project-badge">Hollywood</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Jailer</div>
+      <div class="project-type">Tamil · 2023</div>
+      <span class="project-badge">Tamil</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">PS-1</div>
+      <div class="project-type">Ponniyin Selvan</div>
+      <span class="project-badge">Tamil</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Sita Ramam</div>
+      <div class="project-type">Telugu · 2022</div>
+      <span class="project-badge">Telugu</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Chandramukhi 2</div>
+      <div class="project-type">Tamil · 2023</div>
+      <span class="project-badge">Tamil</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">800</div>
+      <div class="project-type">Biopic · 2023</div>
+      <span class="project-badge">Tamil</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Barroz</div>
+      <div class="project-type">Malayalam · 2024</div>
+      <span class="project-badge">Malayalam</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Gangubai Kathiawadi</div>
+      <div class="project-type">Bollywood · 2022</div>
+      <span class="project-badge">Hindi</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Runway 34</div>
+      <div class="project-type">Bollywood · 2022</div>
+      <span class="project-badge">Hindi</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Heropanti 2</div>
+      <div class="project-type">Bollywood · 2022</div>
+      <span class="project-badge">Hindi</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-dot"></div>
+      <div class="project-name">Bachchan Paandey</div>
+      <div class="project-type">Bollywood · 2022</div>
+      <span class="project-badge">Hindi</span>
+    </div>
+
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-header scroll-reveal">
+    <span class="section-label">04 / Education</span>
+    <div class="section-divider"></div>
+  </div>
+  <h2 class="section-title scroll-reveal" style="margin-bottom: 2rem;">Academic background</h2>
+  <div class="education-list scroll-reveal">
+    <div class="edu-row">
+      <div class="edu-year">2019</div>
+      <div>
+        <div class="edu-name">Programming in Multimedia</div>
+        <div class="edu-institution">ZICA, Bhubaneswar</div>
+      </div>
+      <div class="edu-grade">90%</div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-year">2017</div>
+      <div>
+        <div class="edu-name">+2 Arts</div>
+        <div class="edu-institution">Siddheshwar Mahavidyalaya, Amrada Road</div>
+      </div>
+      <div class="edu-grade">Pass</div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-year">2015</div>
+      <div>
+        <div class="edu-name">10th Standard</div>
+        <div class="edu-institution">Radha Krishna High School, Vellora</div>
+      </div>
+      <div class="edu-grade">Second Div.</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="contact-grid scroll-reveal">
+    <div>
+      <div class="section-label" style="margin-bottom: 1.5rem;">05 / Contact</div>
+      <div class="contact-big-title">Let's work<br>together.</div>
+      <p class="contact-tagline">Open to freelance projects, full-time roles, and collaboration on exciting VFX productions.</p>
+      <div style="margin-top: 2rem;">
+        <div style="font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;">Languages</div>
+        <div class="langs-row">
+          <span class="lang-pill">English</span>
+          <span class="lang-pill">Hindi</span>
+          <span class="lang-pill">Odia</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.41 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value"><a href="tel:8455053580">+91 8455053580</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:sarojb353@gmail.com">sarojb353@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-value">Baghamari, Balasore, Odisha – 756028</div>
+        </div>
+      </div>
+      <div style="margin-top: 0.5rem;">
+        <a href="mailto:sarojb353@gmail.com" class="btn-primary" style="width: 100%; text-align: center; display: block;">Send a message</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2024 Saroj Kumar · VFX Roto Artist</div>
+  <div class="footer-right">Built with care</div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('themeToggle');
+  const sun = document.getElementById('iconSun');
+  const moon = document.getElementById('iconMoon');
+  const html = document.documentElement;
+
+  toggle.addEventListener('click', () => {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    sun.style.display = isDark ? 'block' : 'none';
+    moon.style.display = isDark ? 'none' : 'block';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
